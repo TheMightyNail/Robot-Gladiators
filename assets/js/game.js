@@ -1,0 +1,1 @@
+window.alert("This is an alert! Duck! Just kidding, but JavaScript IS running...");
