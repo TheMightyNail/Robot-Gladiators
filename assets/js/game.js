@@ -1,3 +1,9 @@
+// Game States
+// WIN - The players WINS when they have defeated all robots
+//      * fight all bots
+//      * defeat each bot
+// LOSE - Player's health reduced to 0
+
 // player base stats
 var playerName = window.prompt("Name your robot for glorious combat!");
 var playerHealth = 100;
@@ -6,12 +12,19 @@ var playerMoney = 10;
 console.log(playerName, playerHealth, playerAttack, playerMoney);
 
 // enemy base stats
-var enemyName = "Roborto";
+var enemyNames = ["Roborto", "Amy Androird", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+// for loop to check enemy index
+for(var i = 0; i < enemyNames.length; i++){
+    console.log(enemyNames[i]);
+    console.log(i);
+    console.log(enemyNames[i] + " is at " + i + " index");
+}
+
 // everything inside of the below curly brace is a whole function - REMEMBER THIS!!
-var fight = function() {
+var fight = function(enemyName) {
     window.alert("Welcome to Robot Gladiators!");
     var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
         console.log(promptFight);
@@ -69,5 +82,12 @@ var fight = function() {
 };
 // end of fight function
 
+
+
 // this is calling the function
-fight();
+for(var i = 0; i < enemyNames.length; i++) {
+    fight(enemyNames[i]);
+}
+
+
+
