@@ -25,7 +25,6 @@ for(var i = 0; i < enemyNames.length; i++){
 
 // everything inside of the below curly brace is a whole function - REMEMBER THIS!!
 var fight = function(enemyName) {
-    // window.alert("Welcome to Robot Gladiators!");
     while(playerHealth > 0 && enemyHealth > 0) {
         var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
         console.log(promptFight);
@@ -88,9 +87,27 @@ var fight = function(enemyName) {
 
 // this is calling the function
 for(var i = 0; i < enemyNames.length; i++) {
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(enemyNames[i]);
+    if (playerHealth >= 0){
+        // Indicates Round Number
+        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+        
+        // picks new enemy to fight
+        var pickedEnemyName = enemyNames[i];
+
+        // reset enemy health
+        enemyHealth = 50;
+
+        // debugger tool to pauses script
+        debugger;
+
+        // pickedEnemyName valued in the fight function assumes value of enemyName
+        fight(pickedEnemyName);
+    } else {
+        window.alert("Your robot has died a warrior's death! Game Over!");
+        break;
+    }
+    
+    
 }
 
 
