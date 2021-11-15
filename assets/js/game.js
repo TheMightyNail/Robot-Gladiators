@@ -108,6 +108,16 @@ var startGame = function() {
 
             // pickedEnemyName valued in the fight function assumes value of enemyName
             fight(pickedEnemyName);
+
+            // if enemies still remain
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                var storeConfirm = window.confirm("Well fought! Visit the Shoppe before the next bout?")
+
+                // if yes, go to store() function
+                if (storeConfirm){
+                    shop();
+                }
+            }
         } else {
             window.alert("Your robot has died a warrior's death! Game Over!");
             break;
@@ -132,6 +142,57 @@ var endGame = function() {
         startGame();
     } else {
         window.alert("Thank you for playing Robot Gladiators! Return soon, so that you may show your might to the great Galactic Robo-Mecha-Khan PRIME!")
+    }
+};
+
+var shop = function() {
+    var shopOptionPrompt = window.prompt(
+        "You may pay 7 credits to REFILL your health, or UPGRADE your attack. If you do not wish to make a purchase, you may LEAVE the Shoppe. Please enter 'REFILL', 'UPGRADE', or 'LEAVE'."
+    );
+
+    // switch to carry out selection
+    switch (shopOptionPrompt) {
+        case "refill":
+        case "REFILL":
+        case "Refill":
+            if (playerMoney >= 7) {
+            window.alert("Recharging " + playerName + "'s battery. Health restored by 20 point.");
+
+            // increase health and decrease money
+            playerHealth = playerHealth + 20;
+            playerMoney = playerMoney - 7;
+            break;
+            } else {
+                window.alert("You lack the necessary funds!");
+            }
+            break;
+
+        case "upgrade":
+        case "UPGRADE":
+        case "Upgrade":
+            if (playerMoney >= 7) {
+            window.alert("Upgrading attack module. Attack upgraded by 6 points.");
+
+            // increase attack and decrease money
+            playerAttack = playerAttack + 6;
+            playerMoney = playerMoney - 7;
+            break;
+            } else {
+                window.alert("You lack the necessary funds!");
+            }
+            break;
+        
+        case "leave":
+        case "LEAVE":
+        case "Leave":
+
+            window.alert("Fine, don't buy anything. That's cool.");
+            break;
+        
+        default: 
+            window.alert("Please make a valid selection");
+            shop();
+            break;
     }
 };
 
