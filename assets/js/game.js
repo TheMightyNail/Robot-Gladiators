@@ -41,7 +41,7 @@ var fight = function(enemyName) {
             console.log("playerMoney", playerMoney);
             break;
         } 
-    }
+    } 
 
         // Subtract playerAttack from enemyHealth
         enemyHealth = enemyHealth - playerAttack;
@@ -86,29 +86,57 @@ var fight = function(enemyName) {
 
 
 // this is calling the function
-for(var i = 0; i < enemyNames.length; i++) {
-    if (playerHealth >= 0){
-        // Indicates Round Number
-        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
-        
-        // picks new enemy to fight
-        var pickedEnemyName = enemyNames[i];
+var startGame = function() {
+    // reset player stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
 
-        // reset enemy health
-        enemyHealth = 50;
+    for(var i = 0; i < enemyNames.length; i++) {
+        if (playerHealth >= 0){
+            // Indicates Round Number
+            window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+            
+            // picks new enemy to fight
+            var pickedEnemyName = enemyNames[i];
 
-        // debugger tool to pauses script
-        debugger;
+            // reset enemy health
+            enemyHealth = 50;
 
-        // pickedEnemyName valued in the fight function assumes value of enemyName
-        fight(pickedEnemyName);
-    } else {
-        window.alert("Your robot has died a warrior's death! Game Over!");
-        break;
+            // debugger tool to pauses script
+            // debugger;
+
+            // pickedEnemyName valued in the fight function assumes value of enemyName
+            fight(pickedEnemyName);
+        } else {
+            window.alert("Your robot has died a warrior's death! Game Over!");
+            break;
+        }
     }
-    
-    
-}
+    endGame();
+};
+
+var endGame = function() {
+    // player wins
+    if (playerHealth > 0) {
+        window.alert("Your robot has claimed the philosophically-challenged lives of their opponents, as well as VICTORY! Honor to your mechanical menace! Final Score: " + playerMoney)
+    } else {
+        window.alert("Your robot is now just a crumpled heap of scrap. Back to the garage.")
+    }
+
+    // play again?
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+
+    if(playAgainConfirm) {
+        // restart game
+        startGame();
+    } else {
+        window.alert("Thank you for playing Robot Gladiators! Return soon, so that you may show your might to the great Galactic Robo-Mecha-Khan PRIME!")
+    }
+};
+
+// game start when page loads
+startGame();
 
 
 
