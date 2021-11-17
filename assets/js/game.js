@@ -37,14 +37,14 @@ var fight = function(enemyName) {
         // if yes (true), skip battle
         if (confirmSkip) {
             window.alert(playerName + " has chosen to live another day! 10 money lost!");
-            playerMoney = playerMoney - 10;
+            playerMoney = Math.max(0, playerMoney - 10);
             console.log("playerMoney", playerMoney);
             break;
         } 
     } 
 
         // Subtract playerAttack from enemyHealth
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0, enemyHealth - playerAttack);
         
         // console log that
         // can line break in the parenthesis to make reading this easier
@@ -65,7 +65,8 @@ var fight = function(enemyName) {
             }
         
          // subtract enemyAttack from playerHealth
-        playerHealth = playerHealth - enemyAttack;
+        var damage = randomNumber(enemyAttack - 3, enemyAttack);
+        playerHealth = Math.max(0, playerHealth - enemyAttack);
         console.log(
             enemyName + " attacks " + playerName + "! " + playerName + " now has " + playerHealth + " health remaining!"
         );
@@ -101,10 +102,10 @@ var startGame = function() {
             var pickedEnemyName = enemyNames[i];
 
             // reset enemy health
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40, 60);
 
             // debugger tool to pauses script
-            // debugger;
+            debugger;
 
             // pickedEnemyName valued in the fight function assumes value of enemyName
             fight(pickedEnemyName);
@@ -194,6 +195,12 @@ var shop = function() {
             shop();
             break;
     }
+};
+
+// random number generation
+var randomNumber = function(min, max) {
+    var value = (Math.floor(Math.random()* (max - min + 1) + min));
+    return value;
 };
 
 // game start when page loads
