@@ -78,7 +78,6 @@ var startGame = function() {
         if (playerInfo.health >= 0){
             // Indicates Round Number
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
-            debugger;
             
             // picks new enemy to fight
             var pickedEnemyObj = enemyInfo[i];
@@ -167,10 +166,20 @@ var randomNumber = function(min, max) {
     return value;
 };
 
+// name set function
+var getPlayerName = function() {
+    var name = window.prompt("Name your robot for glorious combat!");
+    while (name === "" || name === null) {
+        window.prompt("Name your robot for glorious combat!");
+    }
+    console.log("Your robot, knighted and named, is " + name);
+    return name;
+}
+
 
 // player base stats
 var playerInfo = {
-    name: window.prompt("Name your robot for glorious combat!"),
+    name : getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
