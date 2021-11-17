@@ -5,15 +5,6 @@
 // LOSE - Player's health reduced to 0
 
 
-var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
-
-// for loop to check enemy index
-for(var i = 0; i < enemyNames.length; i++){
-    console.log(enemyNames[i]);
-    console.log(i);
-    console.log(enemyNames[i] + " is at " + i + " index");
-}
-
 // everything inside of the below curly brace is a whole function - REMEMBER THIS!!
 var fight = function(enemy) {
     console.log(enemy);
@@ -89,7 +80,7 @@ var startGame = function() {
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             
             // picks new enemy to fight
-            var pickedEnemyObj = enemyNames[i];
+            var pickedEnemyObj = enemyInfo[i];
 
             // reset enemy health
             pickedEnemyObj.health = randomNumber(40, 60);
