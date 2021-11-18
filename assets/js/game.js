@@ -4,25 +4,26 @@
 //      * defeat each bot
 // LOSE - Player's health reduced to 0
 
-var linebreak = "\n"
+// there's an infinite loop somewhere in here! I think in the highscore section?
+
 
 var fightOrSkip = function() {
     // ask player to fight or skip
     var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose");
     promptFight = promptFight.toLowerCase();
-
     // conditional recursive function call
     if (promptFight === "" || promptFight === "null") {
         window.alert ("DO NOW COWER. Make your (valid) choice!!");
         return fightOrSkip();
     }
 
-    // if player SKIPS
+//     // if player SKIPS
     if (promptFight === "skip") {
     // confirm skip
+    console.log("hello");
         var confirmSkip = window.confirm("You will be penalized if you skip this fight! Are you sure?");
     }
-
+    console.log(confirmSkip);
     if (confirmSkip) {
         window.alert (playerInfo.name + "has chosen to live another day! 10 money lost!");
         // subtract money
@@ -33,26 +34,30 @@ var fightOrSkip = function() {
 }
 
 
-// everything inside of the below curly brace is a whole function - REMEMBER THIS!!
+// // everything inside of the below curly brace is a whole function - REMEMBER THIS!!
 var fight = function(enemy) {
+    console.log(enemy);
     
-    // determine fight order
+    // // determine fight order
     var isPlayerTurn = true;
     if (Math.random() > 0.5) {
-        isPlayerTurn = false
+        isPlayerTurn = false;
     }
+    
 
     while (playerInfo.health > 0 && enemy.health > 0) {
+        var myFightOrSkip = fightOrSkip()
+        console.log(myFightOrSkip);
         if (isPlayerTurn) {
             // fight or skip prompt
-            if (fightOrSkip) {
+            if (myFightOrSkip) {
                 break;
             }
         }
     }
  
     console.log(enemy);
-    while(playerInfo.health > 0 & enemy.health > 0) {
+    while(playerInfo.health > 0 && enemy.health > 0) {
         if (fightOrSkip()) {
             break;
         }
@@ -77,7 +82,7 @@ var fight = function(enemy) {
                 window.alert(enemy.name + " still has " + enemy.health + " health left!");
             }
             // player gets struck first
-        
+            
          // subtract enemyAttack from playerInfo.health
         var damage = randomNumber(enemy.attack - 3, enemy.attack);
         playerInfo.health = Math.max(0, playerInfo.health - enemy.attack);
@@ -104,9 +109,10 @@ var fight = function(enemy) {
 
 // this is calling the function
 var startGame = function() {
+    console.log("startGame");
     // reset player stats
     playerInfo.reset();
-
+    console.log("startGame 2");
     for(var i = 0; i < enemyInfo.length; i++) {
         if (playerInfo.health >= 0){
             // Indicates Round Number
@@ -118,10 +124,10 @@ var startGame = function() {
             // reset enemy health
             pickedEnemyObj.health = randomNumber(40, 60);
 
-            // debugger tool to pauses script
-            // debugger;
+            // // debugger tool to pauses script
+            // // debugger;
 
-            // pickedEnemyName valued in the fight function assumes value of enemyName
+            // // pickedEnemyName valued in the fight function assumes value of enemyName
             fight(pickedEnemyObj);
 
             // if enemies still remain
@@ -138,14 +144,14 @@ var startGame = function() {
             break;
         }
     }
-    endGame();
+    // endGame();
 };
 
 var endGame = function() {
     window.alert ("The games have ended! How did your robot fare in the bloodsport?!");
 
     // check local storage for high score
-    var highScore = localStorag.getItem("highscore");
+    var highScore = localStorage.getItem("highscore");
     if (highScore === null) {
         highScore = 0;
     }
@@ -204,13 +210,13 @@ var shop = function() {
     }
 };
 
-// random number generation
+// // random number generation
 var randomNumber = function(min, max) {
     var value = (Math.floor(Math.random()* (max - min + 1) + min));
     return value;
 };
 
-// name set function
+// // name set function
 var getPlayerName = function() {
     var name = window.prompt("Name your robot for glorious combat!");
     while (name === "" || name === null) {
@@ -267,7 +273,7 @@ var enemyInfo =[
         attack: randomNumber(10,14),     }
 ];
 
-// game start when page loads
+// // game start when page loads
 startGame();
 
 
