@@ -35,6 +35,22 @@ var fightOrSkip = function() {
 
 // everything inside of the below curly brace is a whole function - REMEMBER THIS!!
 var fight = function(enemy) {
+    
+    // determine fight order
+    var isPlayerTurn = true;
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false
+    }
+
+    while (playerInfo.health > 0 && enemy.health > 0) {
+        if (isPlayerTurn) {
+            // fight or skip prompt
+            if (fightOrSkip) {
+                break;
+            }
+        }
+    }
+ 
     console.log(enemy);
     while(playerInfo.health > 0 & enemy.health > 0) {
         if (fightOrSkip()) {
@@ -60,6 +76,7 @@ var fight = function(enemy) {
             } else {
                 window.alert(enemy.name + " still has " + enemy.health + " health left!");
             }
+            // player gets struck first
         
          // subtract enemyAttack from playerInfo.health
         var damage = randomNumber(enemy.attack - 3, enemy.attack);
@@ -75,6 +92,8 @@ var fight = function(enemy) {
             } else {
                 window.alert(playerInfo.name + " won't take that lying down! " + playerInfo.name + " still has " + playerInfo.health + " health remaining!");
             }
+        // switch turn order for next round
+        isPlayerTurn = !isPlayerTurn;
         }  
     };
 
