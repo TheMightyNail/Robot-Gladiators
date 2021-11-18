@@ -4,28 +4,40 @@
 //      * defeat each bot
 // LOSE - Player's health reduced to 0
 
+var fightOrSkip = function() {
+    // ask player to fight or skip
+    var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose");
+    promptFight = promptFight.toLowerCase();
+
+    // conditional recursive function call
+    if (promptFight === "" || promptFight === "null") {
+        window.alert ("DO NOW COWER. Make your (valid) choice!!");
+        return fightOrSkip();
+    }
+
+    // if player SKIPS
+    if (promptFight === "skip") {
+    // confirm skip
+        var confirmSkip = window.confirm("You will be penalized if you skip this fight! Are you sure?");
+    }
+
+    if (confirmSkip) {
+        window.alert (playerInfo.name + "has chosen to live another day! 10 money lost!");
+        // subtract money
+        playerInfo.money -= 7;
+        return true;
+    }
+    return false;
+}
+
 
 // everything inside of the below curly brace is a whole function - REMEMBER THIS!!
 var fight = function(enemy) {
     console.log(enemy);
     while(playerInfo.health > 0 & enemy.health > 0) {
-        var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        console.log(promptFight);
-
-        // if player chooses to skip:
-     if (promptFight === "skip" || promptFight === "SKIP") {
-        // quit confirm
-        var confirmSkip = window.confirm("You will be penalized if you skip this fight! Are you sure?")
-        
-        // if yes (true), skip battle
-        if (confirmSkip) {
-            window.alert(playerInfo.name + " has chosen to live another day! 10 money lost!");
-            playerInfo.Money = Math.max(0, playerInfo.Money - 10);
-            console.log("playerInfo.Money", playerInfo.Money);
+        if (fightOrSkip()) {
             break;
-        } 
-    } 
-
+        }
         // Subtract playerInfo.attack from enemyHealth
         enemy.health = Math.max(0, enemy.health - playerInfo.attack);
         
