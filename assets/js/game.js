@@ -142,6 +142,22 @@ var startGame = function() {
 };
 
 var endGame = function() {
+    window.alert ("The games have ended! How did your robot fare in the bloodsport?!");
+
+    // check local storage for high score
+    var highScore = localStorag.getItem("highscore");
+    if (highScore === null) {
+        highScore = 0;
+    }
+    // if player's money is greater than highscore, set new highschore
+    if (playerInfo.money > highScore) {
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+        alert("Upon the corpses of their fallen foes, " + playerInfo.name + " now has the high score of " + playerInfo.money + "!!!");
+    } else {
+        alert(playerInfo.name + "has FAILED to beat the high score of " + highScore);
+    }
+
     // player wins
     if (playerInfo.health > 0) {
         window.alert("Your robot has claimed the philosophically-challenged lives of their opponents, as well as VICTORY! Honor to your mechanical menace! Final Score: " + playerInfo.Money)
