@@ -4,6 +4,8 @@
 //      * defeat each bot
 // LOSE - Player's health reduced to 0
 
+var linebreak = "\n"
+
 var fightOrSkip = function() {
     // ask player to fight or skip
     var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose");
@@ -141,27 +143,22 @@ var endGame = function() {
 
 var shop = function() {
     var shopOptionPrompt = window.prompt(
-        "You may pay 7 credits to REFILL your health, or UPGRADE your attack. If you do not wish to make a purchase, you may LEAVE the Shoppe. Please enter 'REFILL', 'UPGRADE', or 'LEAVE'."
+        "You may pay 7 credits to REFILL your health, or UPGRADE your attack.  1 = REFILL, 2 = UPGRADE, 3 = LEAVE"
     );
+    shopOptionPrompt = parseInt(shopOptionPrompt);
 
     // switch to carry out selection
+    // debugger;
     switch (shopOptionPrompt) {
-        case "refill":
-        case "REFILL":
-        case "Refill":
+        case 1:
             playerInfo.refillHealth();
             break;
 
-        case "upgrade":
-        case "UPGRADE":
-        case "Upgrade":
+        case 2:
             playerInfo.upgradeAttack();
             break;
         
-        case "leave":
-        case "LEAVE":
-        case "Leave":
-
+        case 3:
             window.alert("Fine, don't buy anything. That's cool.");
             break;
         
