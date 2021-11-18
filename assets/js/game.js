@@ -5,27 +5,56 @@
 // LOSE - Player's health reduced to 0
 
 
+var fightOrSkip = function() {
+    // ask player to fight or skip
+    var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose");
+    promptFight = promptFight.toLowerCase();
+
+    // conditional recursive function call
+    if (promptFight === "" || promptFight === "null") {
+        window.alert ("DO NOW COWER. Make your (valid) choice!!");
+        return fightOrSkip();
+    }
+
+    // if player SKIPS
+    if (promptFight === "skip") {
+    // confirm skip
+        var confirmSkip = window.confirm("You will be penalized if you skip this fight! Are you sure?");
+    }
+
+    if (confirmSkip) {
+        window.alert (playerInfo.name + "has chosen to live another day! 10 money lost!");
+        // subtract money
+        playerInfo.money -= 7;
+        return true;
+    }
+    return false;
+}
+
+
 // everything inside of the below curly brace is a whole function - REMEMBER THIS!!
 var fight = function(enemy) {
+    
+    // determine fight order
+    var isPlayerTurn = true;
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false
+    }
+
+    while (playerInfo.health > 0 && enemy.health > 0) {
+        if (isPlayerTurn) {
+            // fight or skip prompt
+            if (fightOrSkip) {
+                break;
+            }
+        }
+    }
+ 
     console.log(enemy);
     while(playerInfo.health > 0 & enemy.health > 0) {
-        var promptFight = window.prompt("Will you FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        console.log(promptFight);
-
-        // if player chooses to skip:
-     if (promptFight === "skip" || promptFight === "SKIP") {
-        // quit confirm
-        var confirmSkip = window.confirm("You will be penalized if you skip this fight! Are you sure?")
-        
-        // if yes (true), skip battle
-        if (confirmSkip) {
-            window.alert(playerInfo.name + " has chosen to live another day! 10 money lost!");
-            playerInfo.Money = Math.max(0, playerInfo.Money - 10);
-            console.log("playerInfo.Money", playerInfo.Money);
+        if (fightOrSkip()) {
             break;
-        } 
-    } 
-
+        }
         // Subtract playerInfo.attack from enemyHealth
         enemy.health = Math.max(0, enemy.health - playerInfo.attack);
         
@@ -46,6 +75,7 @@ var fight = function(enemy) {
             } else {
                 window.alert(enemy.name + " still has " + enemy.health + " health left!");
             }
+            // player gets struck first
         
          // subtract enemyAttack from playerInfo.health
         var damage = randomNumber(enemy.attack - 3, enemy.attack);
@@ -61,6 +91,8 @@ var fight = function(enemy) {
             } else {
                 window.alert(playerInfo.name + " won't take that lying down! " + playerInfo.name + " still has " + playerInfo.health + " health remaining!");
             }
+        // switch turn order for next round
+        isPlayerTurn = !isPlayerTurn;
         }  
     };
 
@@ -86,7 +118,7 @@ var startGame = function() {
             pickedEnemyObj.health = randomNumber(40, 60);
 
             // debugger tool to pauses script
-            debugger;
+            // debugger;
 
             // pickedEnemyName valued in the fight function assumes value of enemyName
             fight(pickedEnemyObj);
@@ -109,6 +141,22 @@ var startGame = function() {
 };
 
 var endGame = function() {
+    window.alert ("The games have ended! How did your robot fare in the bloodsport?!");
+
+    // check local storage for high score
+    var highScore = localStorag.getItem("highscore");
+    if (highScore === null) {
+        highScore = 0;
+    }
+    // if player's money is greater than highscore, set new highschore
+    if (playerInfo.money > highScore) {
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+        alert("Upon the corpses of their fallen foes, " + playerInfo.name + " now has the high score of " + playerInfo.money + "!!!");
+    } else {
+        alert(playerInfo.name + "has FAILED to beat the high score of " + highScore);
+    }
+
     // player wins
     if (playerInfo.health > 0) {
         window.alert("Your robot has claimed the philosophically-challenged lives of their opponents, as well as VICTORY! Honor to your mechanical menace! Final Score: " + playerInfo.Money)
@@ -129,27 +177,22 @@ var endGame = function() {
 
 var shop = function() {
     var shopOptionPrompt = window.prompt(
-        "You may pay 7 credits to REFILL your health, or UPGRADE your attack. If you do not wish to make a purchase, you may LEAVE the Shoppe. Please enter 'REFILL', 'UPGRADE', or 'LEAVE'."
+        "You may pay 7 credits to REFILL your health, or UPGRADE your attack.  1 = REFILL, 2 = UPGRADE, 3 = LEAVE"
     );
+    shopOptionPrompt = parseInt(shopOptionPrompt);
 
     // switch to carry out selection
+    // debugger;
     switch (shopOptionPrompt) {
-        case "refill":
-        case "REFILL":
-        case "Refill":
+        case 1:
             playerInfo.refillHealth();
             break;
 
-        case "upgrade":
-        case "UPGRADE":
-        case "Upgrade":
+        case 2:
             playerInfo.upgradeAttack();
             break;
         
-        case "leave":
-        case "LEAVE":
-        case "Leave":
-
+        case 3:
             window.alert("Fine, don't buy anything. That's cool.");
             break;
         
@@ -166,10 +209,20 @@ var randomNumber = function(min, max) {
     return value;
 };
 
+// name set function
+var getPlayerName = function() {
+    var name = window.prompt("Name your robot for glorious combat!");
+    while (name === "" || name === null) {
+        window.prompt("Name your robot for glorious combat!");
+    }
+    console.log("Your robot, knighted and named, is " + name);
+    return name;
+}
+
 
 // player base stats
 var playerInfo = {
-    name: window.prompt("Name your robot for glorious combat!"),
+    name : getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
